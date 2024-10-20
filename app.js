@@ -29,7 +29,8 @@ async function loadWordLists() {
 // Function to check if a word is allowed
 function isWordAllowed(word, scienceSubset) {
   const lowerWord = word.toLowerCase();
-  return scienceSubset.some(row => row.includes(lowerWord)) || tenHundredWords.includes(lowerWord);
+  const strippedWord = lowerWord.endsWith("'s") ? lowerWord.slice(0, -2) : lowerWord;
+  return scienceSubset.some(row => row.includes(strippedWord)) || tenHundredWords.includes(strippedWord);
 }
 
 // Function to highlight words not in the list
@@ -73,9 +74,9 @@ function createInterface() {
   const cutoffInput = document.createElement('input');
   cutoffInput.type = 'number';
   cutoffInput.id = 'cutoff';
-  cutoffInput.value = 250;
+  cutoffInput.value = 248;
   cutoffInput.min = 1;
-  cutoffInput.max = 250;
+  cutoffInput.max = 248;
   cutoffInput.addEventListener('input', updateHighlight); // Update highlighting if cutoff changes
   container.appendChild(cutoffInput);
 
