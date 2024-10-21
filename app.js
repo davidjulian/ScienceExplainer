@@ -28,13 +28,15 @@ async function loadWordLists() {
 
 // Function to check if a word is allowed
 function isWordAllowed(word, scienceSubset) {
-  const lowerWord = word.toLowerCase();
+  const cleanedWord = word.replace(/-/g, ' ');
+  const lowerWord = cleanedWord.toLowerCase().replace(/[^a-z0-9']/g, '');
   const strippedWord = lowerWord.endsWith("'s") ? lowerWord.slice(0, -2) : lowerWord;
   return scienceSubset.some(row => row.includes(strippedWord)) || tenHundredWords.includes(strippedWord);
 }
 
 // Function to highlight words not in the list
 function highlightText(inputText, scienceSubset) {
+  inputText = inputText.replace(/-/g, ' ');
   let words = inputText.split(/\s+/);
   let highlightedText = words.map(word => {
     if (!isWordAllowed(word, scienceSubset)) {
