@@ -54,7 +54,7 @@ function createInterface() {
   container.style.padding = '20px';
 
   const title = document.createElement('h2');
-  title.textContent = 'Science Text Highlighter';
+  title.textContent = 'Science Explainer Text Editor';
   container.appendChild(title);
 
   const textarea = document.createElement('textarea');
