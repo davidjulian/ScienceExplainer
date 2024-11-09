@@ -64,7 +64,7 @@ function createInterface() {
 
   const fileSelect = document.createElement('select');
   fileSelect.id = 'scienceFile';
-  ['scienceWords.json', 'scienceWords1.json', 'scienceWords2.json', 'scienceWords3.json'].forEach(fileName => {
+  ['scienceWords.json', 'scienceWords2.json', 'scienceWords3.json'].forEach(fileName => {
     const option = document.createElement('option');
     option.value = fileName;
     option.textContent = fileName;
@@ -117,7 +117,11 @@ function createInterface() {
   wordCountDiv.id = 'wordCount';
   container.appendChild(wordCountDiv);
 
-  document.body.appendChild(container);
+  // Instead of appending to document.body, append to a specific container
+  const toolContainer = document.getElementById('tool-container');
+  if (toolContainer) {
+    toolContainer.appendChild(container);
+  }
 }
 
 // Highlight function to update the display as user types

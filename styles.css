@@ -1,67 +1,36 @@
+/* Reset body styling */
 body {
-    font-family: 'Roboto', sans-serif;
-    padding: 20px;
-    margin-bottom: 80px; /* Space for the copyright footer */
-}
-
-.instructor-tool {
-    max-width: 600px;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    padding: 20px;
-}
-
-.excluded {
-    text-decoration: line-through;
-    opacity: 0.5;
-}
-
-.sequence-item {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;         /* Ensure body takes the full viewport height */
     display: flex;
-    align-items: center;
-    margin: 10px 0;
+    flex-direction: column;
 }
 
-.button-group {
-    display: flex;
-    margin-right: 10px; /* Adds space between the buttons and the sequence text */
+/* Ensure tool content displays first and takes remaining space */
+#tool-container {
+    flex: 1;                  /* Allows tool content to grow and take available space */
+    padding: 20px;
 }
 
-.sequence-text {
-    flex-grow: 1;
+/* Footer styling: pinned at the bottom */
+#info {
+    background-color: #f1f1f1; /* Light grey background */
+    padding: 10px;             /* Add padding for some space inside the band */
+    text-align: center;        /* Center the text in the info section */
+    font-size: 0.8em;          /* Make the text smaller */
+    color: #666;               /* Light grey color for the text */
+    width: 100%;               /* Ensure it spans the full width */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for definition */
 }
 
-textarea {
-    width: 100%;
-    min-height: 100px;
-    padding: 10px;
-    margin-bottom: 10px;
+#info a {
+    color: #007bff;           /* Standard link color */
+    text-decoration: none;
+    font-size: 0.8em;         /* Match link font size with the rest of the section */
 }
 
-.sortable-drag {
-    opacity: 0.6;
-}
-
-#sequenceList .sequence-item:not(.locked-item) {
-    cursor: move; /* Standard "drag" cursor */
-}
-
-#sequenceList .locked-item {
-    cursor: not-allowed;
-}
-
-#startingList .sequence-item, #endingList .sequence-item {
-    user-select: none;
-    cursor: default;
-}
-
-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: #f1f1f1;
-    font-size: 0.8em;
+#info a:hover {
+    text-decoration: underline;
 }
