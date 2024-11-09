@@ -6,7 +6,7 @@ let wordLists = {};
 let wordListsLoaded = false;
 
 // Function to load JSON files
-async function loadWordLists() {
+async async function loadWordLists() {
   try {
     const tenHundredResponse = await fetch('tenHundredWords.json');
     if (!tenHundredResponse.ok) {
@@ -33,6 +33,7 @@ const wordListNames = await wordListNamesResponse.json();
       }
     }
     wordListsLoaded = true;
+    updateWordListSelect();
   } catch (error) {
     console.error('Error loading word lists:', error);
   }
@@ -91,10 +92,22 @@ function createInterface() {
   container.appendChild(wordListSelect);
 
   // Add options to the select element for each word list
+function updateWordListSelect() {
+  const wordListSelect = document.getElementById('wordListSelect');
+  wordListSelect.innerHTML = '';
+
   const defaultOption = document.createElement('option');
   defaultOption.value = '';
   defaultOption.textContent = 'Select a word list';
   wordListSelect.appendChild(defaultOption);
+
+  Object.keys(wordLists).forEach(listName => {
+    const option = document.createElement('option');
+    option.value = listName;
+    option.textContent = listName;
+    wordListSelect.appendChild(option);
+  });
+}
 
   Object.keys(wordLists).forEach(listName => {
   const option = document.createElement('option');
