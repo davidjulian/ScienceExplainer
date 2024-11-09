@@ -1,0 +1,67 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+    margin-bottom: 80px; /* Space for the copyright footer */
+}
+
+.instructor-tool {
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.excluded {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.sequence-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.button-group {
+    display: flex;
+    margin-right: 10px; /* Adds space between the buttons and the sequence text */
+}
+
+.sequence-text {
+    flex-grow: 1;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.sortable-drag {
+    opacity: 0.6;
+}
+
+#sequenceList .sequence-item:not(.locked-item) {
+    cursor: move; /* Standard "drag" cursor */
+}
+
+#sequenceList .locked-item {
+    cursor: not-allowed;
+}
+
+#startingList .sequence-item, #endingList .sequence-item {
+    user-select: none;
+    cursor: default;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: #f1f1f1;
+    font-size: 0.8em;
+}
