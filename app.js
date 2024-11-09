@@ -5,9 +5,9 @@ let tenHundredWords = [];
 let wordListsLoaded = false;
 
 // Function to load JSON files
-async function loadWordLists() {
+async function loadWordLists(selectedFile) {
   try {
-    const scienceResponse = await fetch('scienceWords.json');
+    const scienceResponse = await fetch(selectedFile);
     const tenHundredResponse = await fetch('tenHundredWords.json');
     
     if (!scienceResponse.ok || !tenHundredResponse.ok) {
@@ -57,6 +57,28 @@ function createInterface() {
   title.textContent = 'Science Explainer Text Editor';
   container.appendChild(title);
 
+  const fileLabel = document.createElement('label');
+  fileLabel.htmlFor = 'scienceFile';
+  fileLabel.textContent = 'Select science word list: ';
+  container.appendChild(fileLabel);
+
+  const fileSelect = document.createElement('select');
+  fileSelect.id = 'scienceFile';
+  ['scienceWords.json', 'scienceWords2.json', 'scienceWords3.json'].forEach(fileName => {
+    const option = document.createElement('option');
+    option.value = fileName;
+    option.textContent = fileName;
+    fileSelect.appendChild(option);
+  });
+  fileSelect.addEventListener('change', () => {
+    wordListsLoaded = false;
+    updateHighlight();
+  });
+  container.appendChild(fileSelect);
+
+  container.appendChild(document.createElement('br'));
+  container.appendChild(document.createElement('br'));
+
   const textarea = document.createElement('textarea');
   textarea.id = 'inputText';
   textarea.rows = 10;
@@ -101,7 +123,8 @@ function createInterface() {
 // Highlight function to update the display as user types
 async function updateHighlight() {
   if (!wordListsLoaded) {
-    await loadWordLists();
+    const selectedFile = document.getElementById('scienceFile').value;
+    await loadWordLists(selectedFile);
   }
   
   let inputText = document.getElementById("inputText").value;
@@ -116,8 +139,8 @@ async function updateHighlight() {
 
 // Load word lists and create interface when the page loads
 window.onload = () => {
-  loadWordLists();
+  loadWordLists('scienceWords.json');
   createInterface();
 };
 
-// Note: This implementation assumes that the files `scienceWords.json` and `tenHundredWords.json` are accessible on the same server and contain arrays of words, including singular and plural forms where applicable. Make sure the JSON files are properly formatted.
+// Note: This implementation allows the user to select between multiple science word lists using a dropdown menu.
