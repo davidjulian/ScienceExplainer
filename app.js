@@ -2,58 +2,44 @@
 
 let scienceWords = [];
 let tenHundredWords = [];
-let wordLists = {};
 let wordListsLoaded = false;
 
 // Function to load JSON files
 async function loadWordLists() {
   try {
+    const scienceResponse = await fetch('scienceWords.json');
     const tenHundredResponse = await fetch('tenHundredWords.json');
-    if (!tenHundredResponse.ok) {
-      throw new Error('Failed to load ten hundred word list');
+    
+    if (!scienceResponse.ok || !tenHundredResponse.ok) {
+      throw new Error('Failed to load word lists');
     }
+    
+    const scienceData = await scienceResponse.json();
+    scienceWords = scienceData.map(entry => entry.map(w => w.toLowerCase()));
+    console.log('Science words loaded:', scienceWords);
     const tenHundredData = await tenHundredResponse.json();
     tenHundredWords = tenHundredData.flatMap(entry => entry.map(w => w.toLowerCase()));
     console.log('Ten hundred words loaded:', tenHundredWords);
-
-    // Load multiple science word lists
-const wordListNamesResponse = await fetch('wordListIndex.json');
-if (!wordListNamesResponse.ok) {
-  throw new Error('Failed to load word list index');
-}
-const wordListNames = await wordListNamesResponse.json();
-    for (const listName of wordListNames) {
-      const response = await fetch(listName);
-      if (response.ok) {
-        const data = await response.json();
-        wordLists[listName] = data.map(entry => entry.map(w => w.toLowerCase()));
-        console.log(`${listName} loaded`);
-      } else {
-        console.warn(`Failed to load word list: ${listName}`);
-      }
-    }
     wordListsLoaded = true;
-    updateWordListSelect();
-    
   } catch (error) {
     console.error('Error loading word lists:', error);
   }
 }
 
 // Function to check if a word is allowed
-function isWordAllowed(word, selectedWordList) {
+function isWordAllowed(word, scienceSubset) {
   const cleanedWord = word.replace(/-/g, ' ');
   const lowerWord = cleanedWord.toLowerCase().replace(/[^a-z0-9']/g, '');
   const strippedWord = lowerWord.endsWith("'s") ? lowerWord.slice(0, -2) : lowerWord;
-  return selectedWordList.some(row => row.includes(strippedWord)) || tenHundredWords.includes(strippedWord);
+  return scienceSubset.some(row => row.includes(strippedWord)) || tenHundredWords.includes(strippedWord);
 }
 
 // Function to highlight words not in the list
-function highlightText(inputText, selectedWordList) {
+function highlightText(inputText, scienceSubset) {
   inputText = inputText.replace(/-/g, ' ');
   let words = inputText.split(/\s+/);
   let highlightedText = words.map(word => {
-    if (!isWordAllowed(word, selectedWordList)) {
+    if (!isWordAllowed(word, scienceSubset)) {
       return `<span style="text-decoration: underline; color: red;">${word}</span>`;
     }
     return word;
@@ -68,7 +54,7 @@ function createInterface() {
   container.style.padding = '20px';
 
   const title = document.createElement('h2');
-  title.textContent = 'Science Text Highlighter';
+  title.textContent = 'Science Explainer Text Editor';
   container.appendChild(title);
 
   const textarea = document.createElement('textarea');
@@ -83,36 +69,9 @@ function createInterface() {
   container.appendChild(document.createElement('br'));
 
   const label = document.createElement('label');
-  label.htmlFor = 'wordListSelect';
-  label.textContent = 'Select a word list: ';
+  label.htmlFor = 'cutoff';
+  label.textContent = 'Cutoff number for science list: ';
   container.appendChild(label);
-
-  const wordListSelect = document.createElement('select');
-  wordListSelect.id = 'wordListSelect';
-  wordListSelect.addEventListener('change', updateHighlight);
-  container.appendChild(wordListSelect);
-
-  // Function to update the select element for word lists
-function updateWordListSelect() {
-  const wordListSelect = document.getElementById('wordListSelect');
-  wordListSelect.innerHTML = '';
-
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.textContent = 'Select a word list';
-  wordListSelect.appendChild(defaultOption);
-
-  }
-
-  Object.keys(wordLists).forEach(listName => {
-  const option = document.createElement('option');
-  option.value = listName;
-  option.textContent = listName;
-  wordListSelect.appendChild(option);
-});
-
-  container.appendChild(document.createElement('br'));
-  container.appendChild(document.createElement('br'));
 
   const cutoffInput = document.createElement('input');
   cutoffInput.type = 'number';
@@ -144,20 +103,13 @@ async function updateHighlight() {
   if (!wordListsLoaded) {
     await loadWordLists();
   }
-
-  const selectedWordListName = document.getElementById("wordListSelect").value;
-  if (!selectedWordListName || !wordLists[selectedWordListName]) {
-    document.getElementById("outputText").innerHTML = '';
-    document.getElementById("wordCount").innerHTML = '';
-    return;
-  }
   
   let inputText = document.getElementById("inputText").value;
   let cutoff = parseInt(document.getElementById("cutoff").value, 10);
   console.log('Cutoff value:', cutoff);
-  let selectedWordList = wordLists[selectedWordListName].slice(0, cutoff);
-  console.log('Selected word list:', selectedWordList);
-  let outputText = highlightText(inputText, selectedWordList);
+  let scienceSubset = scienceWords.slice(0, cutoff);
+  console.log('Science subset:', scienceSubset);
+  let outputText = highlightText(inputText, scienceSubset);
   document.getElementById("outputText").innerHTML = outputText;
   document.getElementById("wordCount").innerHTML = `Word count: ${inputText.split(/\s+/).filter(word => word.length > 0).length}`;
 }
@@ -168,5 +120,4 @@ window.onload = () => {
   createInterface();
 };
 
-// Note: This implementation assumes that the files `tenHundredWords.json` and multiple `scienceWords` files are accessible on the same server
-// and contain arrays of words, including singular and plural forms where applicable. Make sure the JSON files are properly formatted.
+// Note: This implementation assumes that the files `scienceWords.json` and `tenHundredWords.json` are accessible on the same server and contain arrays of words, including singular and plural forms where applicable. Make sure the JSON files are properly formatted.
