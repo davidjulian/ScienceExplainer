@@ -34,6 +34,7 @@ const wordListNames = await wordListNamesResponse.json();
     }
     wordListsLoaded = true;
     updateWordListSelect();
+    
   } catch (error) {
     console.error('Error loading word lists:', error);
   }
