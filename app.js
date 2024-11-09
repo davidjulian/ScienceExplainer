@@ -6,7 +6,7 @@ let wordLists = {};
 let wordListsLoaded = false;
 
 // Function to load JSON files
-async async function loadWordLists() {
+async function loadWordLists() {
   try {
     const tenHundredResponse = await fetch('tenHundredWords.json');
     if (!tenHundredResponse.ok) {
@@ -67,7 +67,7 @@ function createInterface() {
   container.style.padding = '20px';
 
   const title = document.createElement('h2');
-  title.textContent = 'Science Explainer Text Editor';
+  title.textContent = 'Science Text Highlighter';
   container.appendChild(title);
 
   const textarea = document.createElement('textarea');
@@ -91,7 +91,7 @@ function createInterface() {
   wordListSelect.addEventListener('change', updateHighlight);
   container.appendChild(wordListSelect);
 
-  // Add options to the select element for each word list
+  // Function to update the select element for word lists
 function updateWordListSelect() {
   const wordListSelect = document.getElementById('wordListSelect');
   wordListSelect.innerHTML = '';
@@ -101,13 +101,7 @@ function updateWordListSelect() {
   defaultOption.textContent = 'Select a word list';
   wordListSelect.appendChild(defaultOption);
 
-  Object.keys(wordLists).forEach(listName => {
-    const option = document.createElement('option');
-    option.value = listName;
-    option.textContent = listName;
-    wordListSelect.appendChild(option);
-  });
-}
+  }
 
   Object.keys(wordLists).forEach(listName => {
   const option = document.createElement('option');
