@@ -64,7 +64,7 @@ function createInterface() {
 
   const fileSelect = document.createElement('select');
   fileSelect.id = 'scienceFile';
-  ['scienceWords.json', 'scienceWords1.json', 'scienceWords2.json', 'scienceWords3.json'].forEach(fileName => {
+  ['scienceWords.json', 'highAltitude.json', 'scienceWords2.json', 'scienceWords3.json'].forEach(fileName => {
     const option = document.createElement('option');
     option.value = fileName;
     option.textContent = fileName;
