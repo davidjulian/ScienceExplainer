@@ -10,6 +10,37 @@
     <!-- Placeholder for the tool content -->
     <div id="tool-container"></div>
 
+    <dialog id="about-dialog" aria-labelledby="about-title">
+        <header class="about-header">
+            <h2 id="about-title" tabindex="-1" autofocus>About Science Explainer</h2>
+            <form method="dialog"><button type="submit">Close</button></form>
+        </header>
+        <div class="about-content">
+            <p>Science Explainer is a writing exercise for learning and teaching science. Explaining a structure, process, or idea in familiar words can reveal gaps in understanding that technical language can hide. The goal is to explain the science accurately in words your audience can understand.</p>
+
+            <h3>How to use it</h3>
+            <ol>
+                <li>Choose one of the included science word lists and set a cutoff. The editor allows the common words in its <em>ten hundred words</em> list, plus the first entries in your selected science list up to that cutoff. The lists include some plurals and other word forms.</li>
+                <li>Type or paste your explanation into the text box. Words outside the allowed lists appear in red with an underline in the preview below it. Make revisions in the original text box.</li>
+                <li>Lower the cutoff for a more restricted science vocabulary, or raise it to allow more terms. Use the same list and cutoff throughout an assignment.</li>
+            </ol>
+
+            <h3>Ways to use it in teaching</h3>
+            <ul>
+                <li>Explain a scientific structure or process using the allowed vocabulary.</li>
+                <li>Revise a passage that contains technical terms so it can be understood by a less specialized audience.</li>
+                <li>Compare explanations and discuss where a simpler description clarifies an idea, leaves something out, or reveals a misconception.</li>
+            </ul>
+            <p>Teachers can choose a supplied list to suit an assignment. Adding a new custom list currently requires changing the app files; there is no list upload control.</p>
+
+            <h3>About the word lists</h3>
+            <p>The default science list is an approximate biology vocabulary list initially generated with AI. Its ordering is provisional, rather than an established frequency ranking or a validated school curriculum. A cutoff is not a grade level. The highlighting checks vocabulary, not scientific accuracy or a reader's understanding.</p>
+
+            <h3>Origins</h3>
+            <p>Inspired by Randall Munroe's <a href="https://xkcd.com/1133/">Up Goer Five comic</a> and Theo Sanderson's <a href="https://splasho.com/upgoer5/">Up-Goer Five Text Editor</a>, which challenge writers to use a small common vocabulary. Science Explainer adds selectable science word lists and an adjustable cutoff for teaching activities.</p>
+        </div>
+    </dialog>
+
     <!-- Copyright and Terms of Service section -->
     <div id="info">
         <p>&copy; 2024 David Julian, University of Florida</p>

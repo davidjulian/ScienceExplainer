@@ -53,9 +53,26 @@ function createInterface() {
   container.style.fontFamily = 'Arial';
   container.style.padding = '20px';
 
-  const title = document.createElement('h2');
+  const title = document.createElement('h1');
+  title.className = 'app-title';
   title.textContent = 'Science Explainer Text Editor';
   container.appendChild(title);
+
+  const introduction = document.createElement('p');
+  introduction.className = 'app-introduction';
+  introduction.textContent = 'Explain science in familiar words, with an adjustable science vocabulary.';
+  container.appendChild(introduction);
+
+  const aboutButton = document.createElement('button');
+  aboutButton.type = 'button';
+  aboutButton.className = 'about-button';
+  aboutButton.textContent = 'About Science Explainer';
+  aboutButton.setAttribute('aria-haspopup', 'dialog');
+  aboutButton.setAttribute('aria-controls', 'about-dialog');
+  const aboutDialog = document.getElementById('about-dialog');
+  aboutButton.addEventListener('click', () => aboutDialog.showModal());
+  aboutDialog.addEventListener('close', () => aboutButton.focus());
+  container.appendChild(aboutButton);
 
   const fileLabel = document.createElement('label');
   fileLabel.htmlFor = 'scienceFile';
@@ -84,6 +101,7 @@ function createInterface() {
   textarea.rows = 10;
   textarea.cols = 60;
   textarea.placeholder = 'Enter your text here...';
+  textarea.setAttribute('aria-label', 'Your explanation');
   textarea.addEventListener('input', updateHighlight); // Highlight as user types
   container.appendChild(textarea);
 
